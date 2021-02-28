@@ -1,0 +1,31 @@
+name: 删除workflow
+
+env:
+  TZ: Asia/Shanghai
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 45 15 * * *
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ secrets.SCRIPTS_PATH }}
+        token: ${{ secrets.SCRIPTS_PAT }}
+        ref: master
+        path: ss
+
+    - name: Install Python
+      run: |
+        sudo apt update && \
+        sudo apt install python3
+
+    - name: delete
+      run: |
+        python3 ss/github/delete_workflow.py ${{ github.repository }} ${{ secrets.PAT }}

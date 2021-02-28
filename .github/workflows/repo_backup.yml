@@ -1,0 +1,69 @@
+name: repo备份
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: t_event_10m_hz
+  watch:
+    types: started
+
+env:
+  GITHUB_ACTOR: ${{ github.actor }}
+  GITHUB_TOKEN: ${{ secrets.PAT }}
+  GITHUB_SSH_KEY: ${{ secrets.GH_SSH_KEY }}
+  GITHUB_CONFIG: ${{ secrets.GH_CONFIG }}
+  GITHUB_KNOWN_HOSTS: ${{ secrets.GH_KNOWN_HOSTS }}
+  GITEE_SSH_KEY: ${{ secrets.GITEE_SSH_KEY }}
+  GITEE_CONFIG: ${{ secrets.GITEE_CONFIG }}
+  GITEE_KNOWN_HOSTS: ${{ secrets.GITEE_KNOWN_HOSTS }}
+  GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+  GITEE_USER_NAME: ${{ secrets.GITEE_USER_NAME }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.SCRIPTS_PATH }}
+          token: ${{ secrets.SCRIPTS_PAT }}
+          ref: master
+          path: ss
+
+      - name: jd_scripts
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: ${{ secrets.JD_SCRIPTS_ORIGIN_REPO }}
+          REPO_NAME: jd_scripts
+          PULL_SSH_KEY: ${{ secrets.JD_SCRIPTS_SSH_KEY }}
+
+      - name: NeteaseCloudMusicApi
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: https://github.com/Binaryify/NeteaseCloudMusicApi
+          REPO_NAME: NeteaseCloudMusicApi
+
+      - name: E5AutoApi
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: https://github.com/wangziyingwen/AutoApi
+          REPO_NAME: E5AutoApi
+
+      - name: Sunert_Scripts
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: https://github.com/Sunert/Scripts
+          REPO_NAME: Sunert_Scripts

@@ -1,0 +1,39 @@
+name: 运行qqread
+
+on:
+  workflow_dispatch:
+#  watch:
+#    types: [started]
+#  repository_dispatch:
+#    types: t_event_6h_hz
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ secrets.SCRIPTS_PATH }}
+        token: ${{ secrets.SCRIPTS_PAT }}
+        ref: master
+        path: ss
+
+    - name: Install Python
+      run: |
+        sudo apt update && \
+        sudo apt install python3
+        pip3 install -r ss/repo_qqread/requirements.txt
+
+    - name: 运行企鹅读书
+      run: |
+        python3 ss/qqread_script/modify_qqread_py.py
+        python3 ss/repo_qqread/qqread.py
+      env:
+        QQREADHEADERS: ${{ secrets.QQREAD_HEADERS }}
+        QQREADBODYS: ${{ secrets.QQREAD_BODYS }}
+        QQREADTIMEURL: ${{ secrets.QQREAD_TIMEURL }}
+        NOTIFYCFG: ${{ secrets.QQREAD_NOTIFYCFG }}
+        TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+        TG_USER_ID: ${{ secrets.TG_USER_ID }}
+        TZ: Asia/Shanghai

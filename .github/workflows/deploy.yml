@@ -1,0 +1,48 @@
+name: 部署脚本
+
+on:
+  workflow_dispatch:
+  watch:
+    types: [started]
+  repository_dispatch:
+    types: script-update
+  # schedule:
+  #   - cron: '*/20 * * * *'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+    - name: Checkout1
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ github.repo }}
+        token: ${{ secrets.PAT }}
+        ref: master
+        path: xx
+    - name: Checkout2
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ secrets.SCRIPTS_PATH }}
+        token: ${{ secrets.SCRIPTS_PAT }}
+        ref: master
+        path: ss
+
+    - name: Install Python
+      run: |
+        sudo apt update && \
+        sudo apt install python3
+        pip3 install -r ss/requirements.txt
+
+    - name: deploy
+      run: |
+        python3 ss/deploy.py
+
+    - name: commit
+      run: |
+        cd xx
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add .
+        git commit -m "update xxxxx auto commit" || true
+        git push origin master || true

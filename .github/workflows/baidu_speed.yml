@@ -1,0 +1,56 @@
+name: 百度极速版
+on:
+  workflow_dispatch:
+  schedule:
+     - cron: '*/30 * * * *'
+  watch:
+    types: started
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout1
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.SCRIPTS_PATH }}
+          token: ${{ secrets.SCRIPTS_PAT }}
+          ref: master
+      - name: Checkout2
+        uses: actions/checkout@v2
+        with:
+          repository: Sunert/Scripts
+          ref: master
+          path: repo_sunert
+      - name: 提交
+        run: |
+          rm -rf Sunert || true
+          rm -rf repo_sunert/.git
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "update Sunert auto commit" || true
+          git push origin master || true
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: npm install
+        run: |
+          cd repo_sunert
+          npm install
+      - name: '运行 【百度极速】'
+        if: env.BAIDU_COOKIE
+        run: |
+          cd repo_sunert
+          node Task/baidu_speed.js
+        env:
+          BAIDU_COOKIE: ${{ secrets.BAIDU_COOKIE }}
+          TZ: Asia/shanghai
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
+          BARK_PUSH: ${{ secrets.BARK_PUSH }}
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_USER_ID: ${{ secrets.TG_USER_ID }}
+          BARK_SOUND: ${{ secrets.BARK_SOUND }}
+          DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+          DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}

@@ -1,0 +1,45 @@
+name: 运行qqread_js
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.SCRIPTS_PATH }}
+          token: ${{ secrets.SCRIPTS_PAT }}
+          ref: master
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
+      - name: npm install
+        run: |
+          cd repo_qqread_js
+          npm install
+      - name: 安装Python
+        run: |
+          sudo apt update && \
+          sudo apt install python3
+          pip3 install -r requirements.txt
+      - name: '运行 【企鹅读书】'
+        run: |
+          python3 qqread_script/modify_qqread_js.py
+          cd repo_qqread_js/Task
+          node qqreads.js
+        env:
+          QQREAD_BODY: ${{ secrets.QQREAD_BODYS}}
+          QQREAD_TIMEURL: ${{ secrets.QQREAD_TIMEURL}}
+          QQREAD_TIMEHD: ${{ secrets.QQREAD_HEADERS}}
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN}}
+          TG_USER_ID: ${{ secrets.TG_USER_ID}}

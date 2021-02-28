@@ -1,0 +1,47 @@
+name: 部署SCF定时器
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.SCRIPTS_PATH }}
+          token: ${{ secrets.SCRIPTS_PAT }}
+          ref: master
+
+      - name: 安装Python
+        run: |
+          sudo apt update && \
+          sudo apt install python3
+          pip3 install -r requirements.txt
+
+      - name: 部署脚本
+        run: |
+          python3 tencent_scf/scf_timer_deploy.py
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: "安装依赖和serverless工具"
+        run: |
+          npm install
+          sudo npm install serverless -g
+
+      - name: "部署到scf"
+        run: |
+          serverless deploy
+        env:
+          STAGE: dev
+          SERVERLESS_PLATFORM_VENDOR: tencent
+          TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+          TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
