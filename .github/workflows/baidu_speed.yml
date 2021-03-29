@@ -38,7 +38,6 @@ jobs:
       - name: npm install
         run: |
           cd repo_sunert
-          npm install
       - name: '运行 【百度极速】'
         if: env.BAIDU_COOKIE
         run: |
