@@ -67,3 +67,12 @@ jobs:
         env:
           REPO_PATH: https://github.com/Sunert/Scripts
           REPO_NAME: Sunert_Scripts
+
+      - name: chinese-poetry
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: https://github.com/chinese-poetry/chinese-poetry
+          REPO_NAME: chinese-poetry
