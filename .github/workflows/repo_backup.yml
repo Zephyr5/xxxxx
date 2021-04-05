@@ -76,3 +76,21 @@ jobs:
         env:
           REPO_PATH: https://github.com/chinese-poetry/chinese-poetry
           REPO_NAME: chinese-poetry
+
+      - name: v2ray
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: https://github.com/233boy/v2ray
+          REPO_NAME: v2ray
+
+      - name: fhs-install-v2ray
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: https://github.com/v2fly/fhs-install-v2ray
+          REPO_NAME: fhs-install-v2ray
