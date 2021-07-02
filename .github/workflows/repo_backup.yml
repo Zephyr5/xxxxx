@@ -51,6 +51,42 @@ jobs:
           REPO_NAME: jd_shell
           PULL_SSH_KEY: ${{ secrets.JD_SHELL_SSH_KEY }}
 
+      - name: PanghuJdScripts
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: https://github.com/panghu999/jd_scripts
+          REPO_NAME: PanghuJdScripts
+          
+      - name: qinglong
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: https://github.com/whyour/qinglong
+          REPO_NAME: qinglong
+          
+      - name: SuMaiKaDe_bot
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: https://github.com/SuMaiKaDe/bot
+          REPO_NAME: SuMaiKaDe_bot
+
+      - name: nevinen_dockerfiles
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: https://github.com/nevinen/dockerfiles
+          REPO_NAME: nevinen_dockerfiles
+          
       - name: NeteaseCloudMusicApi
         run: |
           ss/github/pull_repo.sh
