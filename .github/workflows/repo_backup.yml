@@ -121,11 +121,11 @@ jobs:
           REPO_PATH: https://github.com/v2fly/fhs-install-v2ray
           REPO_NAME: fhs-install-v2ray
           
-      - name: /unlock-music
+      - name: unlock-music
         run: |
           ss/github/pull_repo.sh
           ss/github/push_to_github.sh
           ss/github/push_to_gitee.sh
         env:
           REPO_PATH: https://github.com/unlock-music/unlock-music
-          REPO_NAME: /unlock-music
+          REPO_NAME: unlock-music
