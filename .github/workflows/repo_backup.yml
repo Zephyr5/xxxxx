@@ -129,3 +129,12 @@ jobs:
         env:
           REPO_PATH: https://github.com/unlock-music/unlock-music
           REPO_NAME: unlock-music
+
+      - name: unlock-music-cli
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: https://github.com/unlock-music/cli
+          REPO_NAME: unlock-music-cli
