@@ -31,42 +31,26 @@ jobs:
           ref: master
           path: ss
 
-      - name: PanghuJdScripts
+      - name: jd_scripts
         run: |
           ss/github/pull_repo.sh
           ss/github/push_to_github.sh
           ss/github/push_to_gitee.sh
         env:
-          REPO_PATH: https://github.com/panghu999/jd_scripts
-          REPO_NAME: PanghuJdScripts
-          
-      - name: qinglong
-        run: |
-          ss/github/pull_repo.sh
-          ss/github/push_to_github.sh
-          ss/github/push_to_gitee.sh
-        env:
-          REPO_PATH: https://github.com/whyour/qinglong
-          REPO_NAME: qinglong
-          
-      - name: SuMaiKaDe_bot
-        run: |
-          ss/github/pull_repo.sh
-          ss/github/push_to_github.sh
-          ss/github/push_to_gitee.sh
-        env:
-          REPO_PATH: https://github.com/SuMaiKaDe/bot
-          REPO_NAME: SuMaiKaDe_bot
+          REPO_PATH: ${{ secrets.JD_SCRIPTS_ORIGIN_REPO }}
+          REPO_NAME: jd_scripts
+          PULL_SSH_KEY: ${{ secrets.JD_SCRIPTS_SSH_KEY }}
 
-      - name: nevinen_dockerfiles
+      - name: jd_shell
         run: |
           ss/github/pull_repo.sh
           ss/github/push_to_github.sh
           ss/github/push_to_gitee.sh
         env:
-          REPO_PATH: https://github.com/nevinen/dockerfiles
-          REPO_NAME: nevinen_dockerfiles
-          
+          REPO_PATH: ${{ secrets.JD_SHELL_ORIGIN_REPO }}
+          REPO_NAME: jd_shell
+          PULL_SSH_KEY: ${{ secrets.JD_SHELL_SSH_KEY }}
+
       - name: NeteaseCloudMusicApi
         run: |
           ss/github/pull_repo.sh
@@ -120,41 +104,3 @@ jobs:
         env:
           REPO_PATH: https://github.com/v2fly/fhs-install-v2ray
           REPO_NAME: fhs-install-v2ray
-          
-      - name: unlock-music
-        run: |
-          ss/github/pull_repo.sh
-          ss/github/push_to_github.sh
-          ss/github/push_to_gitee.sh
-        env:
-          REPO_PATH: https://github.com/unlock-music/unlock-music
-          REPO_NAME: unlock-music
-
-      - name: unlock-music-cli
-        run: |
-          ss/github/pull_repo.sh
-          ss/github/push_to_github.sh
-          ss/github/push_to_gitee.sh
-        env:
-          REPO_PATH: https://github.com/unlock-music/cli
-          REPO_NAME: unlock-music-cli
-
-      - name: jd_shell1
-        run: |
-          ss/github/pull_repo.sh
-          ss/github/push_to_github.sh
-          ss/github/push_to_gitee.sh
-        env:
-          REPO_PATH: ${{ secrets.JD_SHELL_ORIGIN_REPO }}
-          REPO_NAME: jd_shell1
-          PULL_SSH_KEY: ${{ secrets.JD_SHELL_SSH_KEY }}
-
-      - name: jd_shell1_panel_sign_json
-        run: |
-          ss/github/pull_repo.sh
-          ss/github/push_to_github.sh
-          ss/github/push_to_gitee.sh
-        env:
-          REPO_PATH: ${{ secrets.JD_SHELL_PANEL_SIGN_JSON_ORIGIN_REPO }}
-          REPO_NAME: jd_shell1_panel_sign_json
-          PULL_SSH_KEY: ${{ secrets.JD_SHELL_SSH_KEY }}
