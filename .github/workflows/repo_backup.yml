@@ -94,6 +94,15 @@ jobs:
           REPO_PATH: https://github.com/chinese-poetry/chinese-poetry
           REPO_NAME: chinese-poetry
 
+      - name: poetry
+        run: |
+          ss/github/pull_repo.sh
+          ss/github/push_to_github.sh
+          ss/github/push_to_gitee.sh
+        env:
+          REPO_PATH: https://github.com/sheepzh/poetry
+          REPO_NAME: poetry
+
       - name: v2ray
         run: |
           ss/github/pull_repo.sh
