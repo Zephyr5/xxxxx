@@ -5,6 +5,8 @@ on:
     types: t_event_10m_hz
   watch:
     types: started
+  schedule:
+    - cron: 0 */1 * * *
 
 env:
   GITHUB_ACTOR: ${{ github.actor }}
