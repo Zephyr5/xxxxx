@@ -2,8 +2,8 @@ name: 部署SCF定时器
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ master ]
+#   push:
+#     branches: [ master ]
 
 jobs:
   build:
