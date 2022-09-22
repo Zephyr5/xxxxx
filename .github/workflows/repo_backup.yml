@@ -167,8 +167,8 @@ jobs:
           ss/github/push_to_github.sh
           ss/github/push_to_gitee.sh
         env:
-          REPO_PATH: https://github.com/somebasj/ParallelsDesktopCrack
-          REPO_NAME: ParallelsDesktopCrack
+          REPO_PATH: https://github.com/dreamncn/ParallelsDesktopCrack
+          REPO_NAME: ParallelsDesktopCrack_2
           
 #       - name: jd_scripts_python
 #         run: |
