@@ -5,8 +5,6 @@ on:
     types: t_event_10m_hz
   watch:
     types: started
-  schedule:
-    - cron: 0 */1 * * *
 
 env:
   GITHUB_ACTOR: ${{ github.actor }}
@@ -160,21 +158,12 @@ jobs:
           REPO_PATH: ${{ secrets.JD_SHELL_PANEL_SIGN_JSON_ORIGIN_REPO }}
           REPO_NAME: jd_shell1_panel_sign_json
           PULL_SSH_KEY: ${{ secrets.JD_SHELL_SSH_KEY }}
-          
-      - name: ParallelsDesktopCrack
+
+      - name: jd_scripts_python
         run: |
           ss/github/pull_repo.sh
           ss/github/push_to_github.sh
           ss/github/push_to_gitee.sh
         env:
-          REPO_PATH: https://github.com/dreamncn/ParallelsDesktopCrack
-          REPO_NAME: ParallelsDesktopCrack_2
-          
-#       - name: jd_scripts_python
-#         run: |
-#           ss/github/pull_repo.sh
-#           ss/github/push_to_github.sh
-#           ss/github/push_to_gitee.sh
-#         env:
-#           REPO_PATH: https://github.com/ClassmateLin/scripts
-#           REPO_NAME: jd_scripts_python
+          REPO_PATH: https://github.com/ClassmateLin/scripts
+          REPO_NAME: jd_scripts_python
