@@ -67,15 +67,6 @@ jobs:
           REPO_PATH: https://github.com/Binaryify/NeteaseCloudMusicApi
           REPO_NAME: NeteaseCloudMusicApi
 
-      - name: E5AutoApi
-        run: |
-          ss/github/pull_repo.sh
-          ss/github/push_to_github.sh
-          ss/github/push_to_gitee.sh
-        env:
-          REPO_PATH: https://github.com/wangziyingwen/AutoApi
-          REPO_NAME: E5AutoApi
-
       - name: Sunert_Scripts
         run: |
           ss/github/pull_repo.sh
